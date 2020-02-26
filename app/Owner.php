@@ -18,11 +18,16 @@ class Owner extends Authenticatable
     // protected $guard = 'owner';
 
     protected $fillable = [
-         'name', 'email', 'password',
+         'firstName','lastName','username', 'email', 'password',
     ];
 
     public function places()
     {
     	return $this->hasMany('App\Place');
+    }
+
+    public function requests()
+    {
+        return $this->hasMany('App\request_to_be_owner');
     }
 }

@@ -51,11 +51,10 @@ return [
             'provider' => 'owners',
             'hash' => false,
         ],
-        // 'admin' => [
-        //     'driver' => 'passport',
-        //     'provider' => 'admins',
-        //     'hash' => false,
-        // ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -84,6 +83,10 @@ return [
         'owners' => [
             'driver' => 'eloquent',
             'model' => App\Owner::class,
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Admin::class,
         ],
         // 'users' => [
         //     'driver' => 'database',

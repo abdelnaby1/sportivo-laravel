@@ -15,7 +15,9 @@ class AuthController extends Controller
     public function register(Request $request) 
     { 
         $validator = Validator::make($request->all(), [ 
-            'name' => 'required', 
+            'firstName' => 'required', 
+            'lastName' => 'required', 
+            'username' => 'required', 
             'email' => 'required|email|unique:users',
             'password' => 'required', 
             'c_password' => 'required|same:password', 
@@ -24,11 +26,14 @@ class AuthController extends Controller
 		{ 
             return response()->json(['error'=>$validator->errors()], 401);            
         }
-		$data = $request->all(); 
+        $data = $request->all(); 
+        // dd($data);
         $data['password'] = bcrypt($data['password']); 
-        $user = Owner::create($data); 
+        $owner = Owner::create($data);
+        $request = $owner->requests()->create(['documents' => 'test']);
+        
         // $success['token'] =  $user->createToken('MyApp')->accessToken; 
-        $success['name'] =  $user->name;
+        $success['name'] =  $owner->name;
 		return response()->json(['success'=>'you are registered to be owner'], $this->successStatus); 
     }
 
@@ -57,3 +62,21 @@ class AuthController extends Controller
     }
 
 }
+
+
+// public function uploadimage(Request $request)
+//     {
+//       //dd($request->all());
+//       if ($request->hasFile('image'))
+//       {
+//             $file      = $request->file('image');
+//             $filename  = $file->getClientOriginalName();
+//             $extension = $file->getClientOriginalExtension();
+//             $picture   = date('His').'-'.$filename;
+//             $file->move(public_path('img'), $picture);
+//             return response()->json(["message" => "Image Uploaded Succesfully"]);
+//       } 
+//       else
+//       {
+//             return response()->json(["message" => "Select image first."]);
+//       }

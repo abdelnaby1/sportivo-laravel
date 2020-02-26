@@ -1,18 +1,27 @@
 <?php
 
-Route::group(['prefix' => 'api/owner'], function() {
+
+// Route::middleware('auth.owner')->group(function () {
+//     Route::post('register','Owner\AuthController@register');
+// 	Route::post('login','Owner\AuthController@login');
+// 	Route::group(['middleware' => 'api:owner'], function () {
+		
+// 	});
+// }); 
+
+// Route::group(['middleware'=>'auth.owner','namespace'=>'Owner'],function(){
+
+// 	Route::post('register','AuthController@register');
+// 	Route::post('login','AuthController@login');
+// 	Route::group(['middleware' => 'auth:owner'], function () {
+// 		Route::post('request',function(){
+// 			return 'add';
+// 		});
+// 	});
     
-	Route::post('login','AuthController@login');
-	Route::post('register','AuthController@register');
-	Route::group(['middleware' => 'auth:api','role'], function(){
 
-	// Route::get('logout', 'OwnerController@logout');
+// });
 
-		Route::get('/places','Owner\OwnerController@getPlaces');
-		Route::get('/places/{id}','Owner\OwnerController@getPlace');
-
-	});
-});
 // Route::group(['prefix' => 'api/owner','middleware' => ['auth.owner','auth:api']], function() {
     
 //     Route::get('/', function() {

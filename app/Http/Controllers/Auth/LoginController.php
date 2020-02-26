@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth; 
+
 
 class LoginController extends Controller
 {
@@ -20,12 +22,17 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+    protected function guard()
+    {
+        return Auth::guard('admin');
+    }
+
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/home2';
 
     /**
      * Create a new controller instance.
@@ -36,4 +43,6 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    
 }

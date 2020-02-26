@@ -24,11 +24,41 @@ Route::middleware('auth:owner')->get('/owner', function (Request $request) {
 Route::post('register','User\AuthController@register');
 Route::post('login','User\AuthController@login');
 
-Route::prefix('owner')->group(function () {
-    Route::middleware('auth.owner')->group(function () {
-        Route::post('register','Owner\AuthController@register');
-        Route::post('login','Owner\AuthController@login');
-    }); 
+Route::group(['middleware'=>'auth:api','namespace'=>'User'],function(){
+
+	
+        // Route::get('test',function(){
+        //     return 'hello';
+        // });
+		Route::get('request',function(){
+			return request()->user();
+		});  
+
+});
+
+//====================================================================================================================//
+
+// Route::prefix('owner')->group(function () {
+//     Route::middleware('auth.owner')->group(function () {
+//         Route::post('register','Owner\AuthController@register');
+//         Route::post('login','Owner\AuthController@login');
+//     }); 
+// });
+
+
+
+Route::group(['prefix'=>'owner','middleware'=>'auth.owner','namespace'=>'Owner'],function(){
+
+	Route::post('register','AuthController@register');
+	Route::post('login','AuthController@login');
+	Route::group(['middleware' => 'auth:owner'], function () {
+        Route::get('request','RequestController@makeRequest');
+		// Route::get('request',function(){
+		// 	return 'add';
+		// });
+	});
+    
+
 });
 
 
